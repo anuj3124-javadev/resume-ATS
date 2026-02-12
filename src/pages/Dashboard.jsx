@@ -1,13 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { resumeAPI } from '../services/api';
-import { getCurrentUser } from '../utils/storage'; // Add this import
 import ResumeCard from '../components/ResumeCard';
 import Loader from '../components/Loader';
 import '../styles/dashboard.css';
 
 const Dashboard = () => {
-  const navigate = useNavigate();
   const [resumes, setResumes] = useState([]);
   const [loading, setLoading] = useState(true);
   const [uploading, setUploading] = useState(false);
@@ -15,9 +12,6 @@ const Dashboard = () => {
   const [dragActive, setDragActive] = useState(false);
   const [showUploadModal, setShowUploadModal] = useState(false);
   const [selectedFile, setSelectedFile] = useState(null);
-
-  // Get user safely
-  const user = getCurrentUser();
 
   useEffect(() => {
     fetchResumes();

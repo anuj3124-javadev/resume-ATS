@@ -10,28 +10,26 @@ const ResumeReport = () => {
   const navigate = useNavigate();
   const [resume, setResume] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState('');
   const [activeTab, setActiveTab] = useState('overview');
 
   useEffect(() => {
-    fetchResume();
-  }, [id]);
-
-  const fetchResume = async () => {
-    try {
-      setLoading(true);
-      const response = await resumeAPI.getResume(id);
-      if (response.data.success) {
-        setResume(response.data.data);
+    const fetchResume = async () => {
+      try {
+        setLoading(true);
+        const response = await resumeAPI.getResume(id);
+        if (response.data.success) {
+          setResume(response.data.data);
+        }
+      } catch (error) {
+        console.error('Error fetching resume:', error);
+        navigate('/dashboard');
+      } finally {
+        setLoading(false);
       }
-    } catch (error) {
-      console.error('Error fetching resume:', error);
-      setError('Failed to load resume report. Please try again.');
-      navigate('/dashboard');
-    } finally {
-      setLoading(false);
-    }
-  };
+    };
+
+    fetchResume();
+  }, [id, navigate]);
 
   const handleDelete = async () => {
     if (window.confirm('Are you sure you want to delete this resume?')) {
@@ -40,7 +38,6 @@ const ResumeReport = () => {
         navigate('/dashboard');
       } catch (error) {
         console.error('Delete error:', error);
-        setError('Failed to delete resume');
       }
     }
   };
