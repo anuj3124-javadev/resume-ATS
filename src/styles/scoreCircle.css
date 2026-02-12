@@ -1,0 +1,93 @@
+/* ============================================
+   scoreCircle.css – Professional ATS Score Circle
+   Uses global CSS variables (do not redefine)
+============================================ */
+
+.score-circle-container {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.score-circle-wrapper {
+  position: relative;
+  /* subtle pulse instead of float – more professional */
+  animation: subtlePulse 3s ease-in-out infinite;
+}
+
+@keyframes subtlePulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.02); }
+}
+
+.score-circle-svg {
+  transform: rotate(0deg);
+  filter: drop-shadow(var(--shadow-sm));
+}
+
+.score-circle-bg {
+  transition: stroke var(--transition-fast);
+}
+
+.score-circle-progress {
+  transition: stroke-dashoffset 1s cubic-bezier(0.4, 0, 0.2, 1),
+              stroke 0.3s ease;
+  filter: drop-shadow(0 2px 4px rgba(37,99,235,0.2));
+}
+
+.score-circle-content {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+.score-circle-value {
+  font-size: clamp(1.25rem, 4vw, 2rem);
+  font-weight: 700;
+  line-height: 1;
+  margin-bottom: 0.15rem;
+  transition: color 0.5s ease;
+  /* color is set dynamically via JS, no default needed */
+}
+
+.score-circle-percent {
+  font-size: 0.75em;
+  font-weight: 400;
+  margin-left: 1px;
+  color: var(--text-light); /* consistent with global */
+}
+
+.score-circle-label {
+  font-size: 0.7rem;
+  color: var(--text-secondary);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-top: 0.15rem;
+}
+
+/* animation for score increase – kept but refined */
+@keyframes scorePulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.08); }
+  100% { transform: scale(1); }
+}
+
+.score-circle-value {
+  animation: scorePulse 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* when score circle is used inside a card (small size) */
+.resume-score .score-circle-value {
+  font-size: 1.4rem;
+}
+
+.resume-score .score-circle-label {
+  font-size: 0.6rem;
+}
